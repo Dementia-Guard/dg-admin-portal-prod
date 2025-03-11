@@ -5,7 +5,7 @@ class Toaster {
     loadingToast = (message) => {
         this.loaderToastId = toast.loading(message,
             {
-                autoClose: false,
+                autoClose: true,
                 closeOnClick: true,
                 pauseOnHover: false,
                 draggable: false,

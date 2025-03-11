@@ -8,7 +8,7 @@ export default function SiedBar({user}) {
             <div className="navbar-vertical">
                 <div className="px-4 py-5">
                     <NavLink to={`/app/${user.Role.toLowerCase()}/dashboard`} end={true} className="navbar-brand">
-                        <img className='w-75' src="/assets/images/logo/freshcart-logo.png" alt="Logo" />
+                        <img className='w-100' src="/assets/images/logo/dg-logo.png" alt="Logo" />
                     </NavLink>
                 </div>
                 <div className="navbar-vertical-content flex-grow-1" data-simplebar>
@@ -18,7 +18,7 @@ export default function SiedBar({user}) {
                             <NavLink end={true} to={`/app/${user.Role.toLowerCase()}/dashboard`} className="nav-link">
                                 <div className="d-flex align-items-center">
                                     <span className="nav-link-icon"><i className="fa-solid fa-dashboard" /></span>
-                                    <span className="nav-link-text">{user.Role.toLowerCase()} Dashboard</span>
+                                    <span className="nav-link-text">Doctor's Dashboard</span>
                                 </div>
                             </NavLink>
                         </li>
@@ -31,46 +31,46 @@ export default function SiedBar({user}) {
                                     <NavLink to={`/app/${user.Role.toLowerCase()}/customers`} className="nav-link">
                                         <div className="d-flex align-items-center">
                                             <span className="nav-link-icon"><i className="fa-solid fa-people-group" /></span>
-                                            <span className="nav-link-text">Users</span>
+                                            <span className="nav-link-text">Patients</span>
                                         </div>
                                     </NavLink>
                                 </li>
                                 <li className="nav-item">
                                     <NavLink to={`/app/${user.Role.toLowerCase()}/products`} className="nav-link">
                                         <div className="d-flex align-items-center">
-                                            <span className="nav-link-icon"><i className="fa-solid fa-shopping-cart" /></span>
-                                            <span className="nav-link-text">Products</span>
+                                            <span className="nav-link-icon"><i className="fa-solid fa-brain" /></span>
+                                            <span className="nav-link-text">MRI-Analysis</span>
                                         </div>
                                     </NavLink>
                                 </li>
                                 <li className="nav-item">
                                     <NavLink to={`/app/${user.Role.toLowerCase()}/categories`} className="nav-link">
                                         <div className="d-flex align-items-center">
-                                            <span className="nav-link-icon"><i className="fa-solid fa-list" /></span>
-                                            <span className="nav-link-text">Categories</span>
+                                            <span className="nav-link-icon"><i className="fa-solid fa-percent" /></span>
+                                            <span className="nav-link-text">Progression Tracking</span>
                                         </div>
                                     </NavLink>
                                 </li>
                                 <li className="nav-item">
                                     <NavLink to={`/app/${user.Role.toLowerCase()}/orders`} className="nav-link">
                                         <div className="d-flex align-items-center">
-                                            <span className="nav-link-icon"><i className="fa-solid fa-bag-shopping" /></span>
-                                            <span className="nav-link-text">Orders</span>
+                                            <span className="nav-link-icon"><i className="fa-solid fa-file-contract" /></span>
+                                            <span className="nav-link-text">Treatment Plans</span>
                                         </div>
                                     </NavLink>
                                 </li>
-                                <li className="nav-item">
+                                {/* <li className="nav-item">
                                     <NavLink to={`/app/${user.Role.toLowerCase()}/sellers`} className="nav-link">
                                         <div className="d-flex align-items-center">
                                             <span className="nav-link-icon"><i className="fa-solid fa-shop" /></span>
                                             <span className="nav-link-text">Sellers / Vendors</span>
                                         </div>
                                     </NavLink>
-                                </li>
+                                </li> */}
                             </>
                         )}
 
-                        {user.Role === 'VENDOR' && (
+                        {/* {user.Role === 'VENDOR' && (
                             <>
                                 <li className="nav-item">
                                     <NavLink to={`/app/${user.Role.toLowerCase()}/products`} className="nav-link">
@@ -110,7 +110,7 @@ export default function SiedBar({user}) {
                                     </NavLink>
                                 </li>
                             </>
-                        )}
+                        )} */}
 
                         {/* Common profile and logout items */}
                         <hr className='bordered' />
@@ -122,14 +122,14 @@ export default function SiedBar({user}) {
                                 </div>
                             </NavLink>
                         </li>
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
                             <button className="nav-link w-100">
                                 <div className="d-flex align-items-center">
                                     <span className="nav-link-icon"><i className="fa-solid fa-share" /></span>
                                     <span className="nav-link-text">Share</span>
                                 </div>
                             </button>
-                        </li>
+                        </li> */}
                         <li className="nav-item">
                             <button className="nav-link w-100">
                                 <div className="d-flex align-items-center">

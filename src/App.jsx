@@ -35,10 +35,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* Public Routes */}
-          <Route path="/" element={<h1>hello</h1>} />
+          {/* <Route path="/" element={<h1>hello</h1>} /> */}
 
           {/* Auth Stack */}
-          <Route path="/auth" element={<AuthStack />}>
+          <Route path="/" element={<AuthStack />}>
             <Route index element={<SignIn />} />
             <Route path="signIn" element={<SignIn />} />
             <Route path="signUp" element={<SignUp />} />
