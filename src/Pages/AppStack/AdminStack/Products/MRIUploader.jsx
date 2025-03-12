@@ -3,7 +3,7 @@ import axios from "axios";
 import ResultsDisplay from "./ResultsDisplay";
 
 const API_URL =
-  "https://dg-mri-analysis-dementia-level-service-341015716129.asia-southeast1.run.app/api/v1/predict/";
+  "https://dg-mri-analysis-dementia-level-service-341015716129.asia-southeast1.run.app/predict/";
 
 const MRIUploader = () => {
   const [file, setFile] = useState(null);

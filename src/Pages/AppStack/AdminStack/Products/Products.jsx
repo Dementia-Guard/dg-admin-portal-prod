@@ -16,7 +16,7 @@ export default function Products() {
   return (
     <main className="main-content-wrapper pb-6 px-0 px-md-4">
       <div className="container">
-        <BreadCrumb page={"Upload MRI Images"} icon={"fa-file-medical"} />
+        <BreadCrumb page={"Analyze MRI Images"} icon={"fa-file-medical"} />
 
         <div className="row justify-content-center">
           <div className="col-xl-8 col-md-10 col-12">
