@@ -6,11 +6,11 @@ import './App.css';
 import AdminStack from './Pages/AppStack/AdminStack/AdminStack';
 import ForgotPassword from './Pages/AuthStack/ForgotPassword/ForgotPassword';
 import SignIn from './Pages/AuthStack/SignIn/SignIn';
-import Products from './Pages/AppStack/AdminStack/Products/Products';
-import Categories from './Pages/AppStack/AdminStack/Categories/Categories';
-import Orders from './Pages/AppStack/AdminStack/Orders/Orders';
+import MRIAnalysis from './Pages/AppStack/AdminStack/MRIAnalysis/MRIAnalysis';
+import ProgressionTracking from './Pages/AppStack/AdminStack/ProgressionTracking/ProgressionTracking';
+import TreatmentPlans from './Pages/AppStack/AdminStack/TreatmentPlans/TreatmentPlans';
 import Sellers from './Pages/AppStack/AdminStack/Sellers/Sellers';
-import Customers from './Pages/AppStack/AdminStack/Customers/Customers';
+import Patients from './Pages/AppStack/AdminStack/Patients/Patients';
 import Reviews from './Pages/AppStack/AdminStack/Reviews/Reviews';
 import Profile from './Pages/AppStack/AdminStack/Profile/Profile';
 import AppNotifications from './Pages/AppStack/AdminStack/AppNotifications/AppNotifications';
@@ -53,17 +53,17 @@ function App() {
               <Route path="admin" element={<AdminStack />}>
                 <Route index element={<AdminDashboard />} />
                 <Route path="dashboard" element={<AdminDashboard />} />
-                <Route path="products" element={<Products />} />
+                <Route path="mriAnalysis" element={<MRIAnalysis />} />
                 <Route path="addProduct" element={<AddProducts />} />
                 <Route path="editProduct/:id" element={<AddProducts />} />
-                <Route path="categories" element={<Categories />} />
+                <Route path="progressionTracking" element={<ProgressionTracking />} />
                 <Route path="addCategory" element={<AddCategory />} />
                 <Route path="editCategory/:id" element={<AddCategory />} />
-                <Route path="orders" element={<Orders />} />
+                <Route path="treatmentPlans" element={<TreatmentPlans />} />
                 <Route path="sellers" element={<Sellers />} />
                 <Route path="addSeller" element={<AddSeller />} />
                 <Route path="editSeller/:id" element={<AddSeller />} />
-                <Route path="customers" element={<Customers />} />
+                <Route path="patients" element={<Patients />} />
                 <Route path="addCustomer" element={<AddCustomers />} />
                 <Route path="editCustomer/:id" element={<AddCustomers />} />
                 <Route path="reviews" element={<Reviews />} />

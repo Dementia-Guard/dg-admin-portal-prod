@@ -6,7 +6,7 @@ import TreatmentResultsDisplay from "./TreatmentResultsDisplay";
 import BreadCrumb from "../../../../Components/BreadCrumb/BreadCrumb";
 import TreatmentForm from "./TreatmentForm";
 
-export default function Orders() {
+export default function TreatmentPlans() {
   const [loading, setLoading] = useState(false);
   const [treatmentPlan, setTreatmentPlan] = useState(null); // State to store the treatment plan result
   const navigate = useNavigate(); // Using useNavigate hook
@@ -61,7 +61,7 @@ export default function Orders() {
   return (
     <main className="main-content-wrapper">
       <div className="container">
-        <BreadCrumb page={"Treatment Plans"} icon={"fa-shopping-bag"} />
+        <BreadCrumb page={"Treatment Plans"} icon={"fa-solid fa-file-contract"} />
         <div className="row">
           <div className="col-xl-12 col-12 mb-5">
             <div className="card h-100 card">

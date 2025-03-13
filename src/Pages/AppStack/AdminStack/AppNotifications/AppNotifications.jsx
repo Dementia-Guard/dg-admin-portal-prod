@@ -83,7 +83,7 @@ export default function AppNotifications() {
                                         </tbody>
                                     </table>
                                 </div>
-                                <Paginator />
+                                {/* <Paginator /> */}
                             </div>
                         </div>
                     </div>

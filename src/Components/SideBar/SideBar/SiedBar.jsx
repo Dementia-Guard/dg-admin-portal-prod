@@ -28,7 +28,7 @@ export default function SiedBar({user}) {
                         {user.Role === 'ADMIN' && (
                             <>
                                <li className="nav-item">
-                                    <NavLink to={`/app/${user.Role.toLowerCase()}/customers`} className="nav-link">
+                                    <NavLink to={`/app/${user.Role.toLowerCase()}/patients`} className="nav-link">
                                         <div className="d-flex align-items-center">
                                             <span className="nav-link-icon"><i className="fa-solid fa-people-group" /></span>
                                             <span className="nav-link-text">Patients</span>
@@ -36,7 +36,7 @@ export default function SiedBar({user}) {
                                     </NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink to={`/app/${user.Role.toLowerCase()}/products`} className="nav-link">
+                                    <NavLink to={`/app/${user.Role.toLowerCase()}/mriAnalysis`} className="nav-link">
                                         <div className="d-flex align-items-center">
                                             <span className="nav-link-icon"><i className="fa-solid fa-brain" /></span>
                                             <span className="nav-link-text">MRI-Analysis</span>
@@ -44,7 +44,7 @@ export default function SiedBar({user}) {
                                     </NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink to={`/app/${user.Role.toLowerCase()}/categories`} className="nav-link">
+                                    <NavLink to={`/app/${user.Role.toLowerCase()}/progressionTracking`} className="nav-link">
                                         <div className="d-flex align-items-center">
                                             <span className="nav-link-icon"><i className="fa-solid fa-percent" /></span>
                                             <span className="nav-link-text">Progression Tracking</span>
@@ -52,7 +52,7 @@ export default function SiedBar({user}) {
                                     </NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink to={`/app/${user.Role.toLowerCase()}/orders`} className="nav-link">
+                                    <NavLink to={`/app/${user.Role.toLowerCase()}/treatmentPlans`} className="nav-link">
                                         <div className="d-flex align-items-center">
                                             <span className="nav-link-icon"><i className="fa-solid fa-file-contract" /></span>
                                             <span className="nav-link-text">Treatment Plans</span>

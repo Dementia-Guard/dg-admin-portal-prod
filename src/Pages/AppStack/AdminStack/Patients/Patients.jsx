@@ -4,7 +4,7 @@ import { db } from "../../../../Firebase/config";
 import BreadCrumb from "../../../../Components/BreadCrumb/BreadCrumb";
 import Paginator from "../../../../Components/Paginator/Paginator";
 
-export default function Customers() {
+export default function Patients() {
   const [patients, setPatients] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -42,7 +42,7 @@ export default function Customers() {
   return (
     <main className="main-content-wrapper">
       <div className="container">
-        <BreadCrumb page={"Customers"} icon={"fa-user"} />
+        <BreadCrumb page={"Patients"} icon={"fa-solid fa-people-group"} />
         <div className="row">
           <div className="col-xl-12 col-12 mb-5">
             <div className="card h-100 card">
@@ -60,9 +60,9 @@ export default function Customers() {
                       />
                     </form>
                   </div>
-                  <div className="col-md-2 col-12 text-end">
+                  {/* <div className="col-md-2 col-12 text-end">
                     <button className="btn btn-dark">Add Patient</button>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="card-body p-0">

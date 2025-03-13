@@ -3,6 +3,7 @@ import BreadCrumb from "../../../../Components/BreadCrumb/BreadCrumb";
 import ProgressionForm from "./ProgressionForm";
 import ProgressionResults from "./ProgressionResultsDisplay";
 import ProgressionChart from "./ProgressionChart";
+import Toaster from "../../../../Utils/Toaster/Toaster";
 
 export default function ProgressionTracking() {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,7 +13,7 @@ export default function ProgressionTracking() {
   const handleSubmit = async (data) => {
     setIsLoading(true);
     setError(null);
-    
+
     try {
       const response = await fetch("http://localhost:8000/api/v1/predict/", {
         method: "POST",
@@ -21,11 +22,11 @@ export default function ProgressionTracking() {
         },
         body: JSON.stringify(data),
       });
-      
+
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
       }
-      
+
       const resultData = await response.json();
       setResults(resultData);
     } catch (err) {
@@ -44,24 +45,21 @@ export default function ProgressionTracking() {
   return (
     <main className="main-content-wrapper">
       <div className="container">
-        <BreadCrumb page={"Progression Tracking"} icon={"fa-chart-line"} />
-        
-        {error && (
-          <div className="alert alert-danger mb-4" role="alert">
-            {error}
-          </div>
-        )}
-        
+        <BreadCrumb
+          page={"Progression Tracking"}
+          icon={"fa-solid fa-percent"}
+        />
+
         <div className="row mb-5">
           <div className="col-xl-12">
-            <ProgressionForm 
-              onSubmit={handleSubmit} 
-              isLoading={isLoading} 
+            <ProgressionForm
+              onSubmit={handleSubmit}
+              isLoading={isLoading}
               onReset={handleReset}
             />
           </div>
         </div>
-        
+
         {results && (
           <>
             <div className="row mb-5">
@@ -69,7 +67,7 @@ export default function ProgressionTracking() {
                 <ProgressionChart results={results} />
               </div>
             </div>
-            
+
             <div className="row">
               <div className="col-xl-12">
                 <ProgressionResults results={results} />

@@ -1,15 +1,20 @@
 import React, { useState } from "react";
+import Toaster from "../../../../Utils/Toaster/Toaster";
 
 const ProgressionForm = ({ onSubmit, isLoading, onReset }) => {
   const initialState = {
-    visits: [{ }],
-    numFutureVisits: '',
-    intervalMonths: ''
+    visits: [{}],
+    numFutureVisits: "",
+    intervalMonths: "",
   };
 
   const [visits, setVisits] = useState(initialState.visits);
-  const [numFutureVisits, setNumFutureVisits] = useState(initialState.numFutureVisits);
-  const [intervalMonths, setIntervalMonths] = useState(initialState.intervalMonths);
+  const [numFutureVisits, setNumFutureVisits] = useState(
+    initialState.numFutureVisits
+  );
+  const [intervalMonths, setIntervalMonths] = useState(
+    initialState.intervalMonths
+  );
 
   const handleAddVisit = () => {
     setVisits([...visits, { mmse: "", cdr: "", age: "" }]);
@@ -29,14 +34,29 @@ const ProgressionForm = ({ onSubmit, isLoading, onReset }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Validate required fields
+    if (!numFutureVisits || !intervalMonths) {
+      Toaster.justToast("error", "Please fill in all required fields.");
+      return;
+    }
+
+    // Validate each visit data
+    for (let visit of visits) {
+      if (!visit.mmse || !visit.cdr || !visit.age) {
+        Toaster.justToast("error", "Please fill in all required visit fields.");
+        return;
+      }
+    }
+
     const data = {
-      visits: visits.map(visit => ({
+      visits: visits.map((visit) => ({
         mmse: parseInt(visit.mmse),
         cdr: parseFloat(visit.cdr),
-        age: parseInt(visit.age)
+        age: parseInt(visit.age),
       })),
       num_future_visits: parseInt(numFutureVisits),
-      interval_months: parseInt(intervalMonths)
+      interval_months: parseInt(intervalMonths),
     };
     onSubmit(data);
   };
@@ -57,7 +77,9 @@ const ProgressionForm = ({ onSubmit, isLoading, onReset }) => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <div className="d-flex justify-content-between align-items-center mb-3">
-              <label className="form-label fw-medium mb-0">Patient Visits</label>
+              <label className="form-label fw-medium mb-0">
+                Patient Visits
+              </label>
               <button
                 type="button"
                 className="btn btn-sm btn-outline-primary px-3"
@@ -66,7 +88,7 @@ const ProgressionForm = ({ onSubmit, isLoading, onReset }) => {
                 <i className="fas fa-plus me-1"></i> Add Visit
               </button>
             </div>
-            
+
             {visits.map((visit, index) => (
               <div key={index} className="card border mb-3">
                 <div className="card-body py-3">
@@ -86,12 +108,16 @@ const ProgressionForm = ({ onSubmit, isLoading, onReset }) => {
                   </div>
                   <div className="row g-3">
                     <div className="col-md-4">
-                      <label className="form-label small">MMSE Score (0-30)</label>
+                      <label className="form-label small">
+                        MMSE Score (0-30)
+                      </label>
                       <input
                         type="number"
                         className="form-control form-control-sm"
                         value={visit.mmse}
-                        onChange={(e) => handleVisitChange(index, "mmse", e.target.value)}
+                        onChange={(e) =>
+                          handleVisitChange(index, "mmse", e.target.value)
+                        }
                         min="0"
                         max="30"
                         required
@@ -99,12 +125,16 @@ const ProgressionForm = ({ onSubmit, isLoading, onReset }) => {
                       <small className="text-muted">Higher is better</small>
                     </div>
                     <div className="col-md-4">
-                      <label className="form-label small">CDR Score (0-3)</label>
+                      <label className="form-label small">
+                        CDR Score (0-3)
+                      </label>
                       <input
                         type="number"
                         className="form-control form-control-sm"
                         value={visit.cdr}
-                        onChange={(e) => handleVisitChange(index, "cdr", e.target.value)}
+                        onChange={(e) =>
+                          handleVisitChange(index, "cdr", e.target.value)
+                        }
                         min="0"
                         max="3"
                         step="0.5"
@@ -118,7 +148,9 @@ const ProgressionForm = ({ onSubmit, isLoading, onReset }) => {
                         type="number"
                         className="form-control form-control-sm"
                         value={visit.age}
-                        onChange={(e) => handleVisitChange(index, "age", e.target.value)}
+                        onChange={(e) =>
+                          handleVisitChange(index, "age", e.target.value)
+                        }
                         min="0"
                         required
                       />
@@ -132,10 +164,14 @@ const ProgressionForm = ({ onSubmit, isLoading, onReset }) => {
 
           <div className="card border mb-4">
             <div className="card-body py-3">
-              <h6 className="mb-3 text-primary fw-medium">Prediction Settings</h6>
+              <h6 className="mb-3 text-primary fw-medium">
+                Prediction Settings
+              </h6>
               <div className="row g-3">
                 <div className="col-md-6">
-                  <label className="form-label small">Number of Future Visits</label>
+                  <label className="form-label small">
+                    Number of Future Visits
+                  </label>
                   <input
                     type="number"
                     className="form-control form-control-sm"
@@ -147,7 +183,9 @@ const ProgressionForm = ({ onSubmit, isLoading, onReset }) => {
                   />
                 </div>
                 <div className="col-md-6">
-                  <label className="form-label small">Interval Between Visits (months)</label>
+                  <label className="form-label small">
+                    Interval Between Visits (months)
+                  </label>
                   <input
                     type="number"
                     className="form-control form-control-sm"
@@ -177,7 +215,11 @@ const ProgressionForm = ({ onSubmit, isLoading, onReset }) => {
             >
               {isLoading ? (
                 <>
-                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  <span
+                    className="spinner-border spinner-border-sm me-2"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
                   Processing...
                 </>
               ) : (
