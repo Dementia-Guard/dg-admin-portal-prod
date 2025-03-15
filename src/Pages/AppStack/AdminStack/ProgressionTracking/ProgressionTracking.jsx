@@ -3,6 +3,7 @@ import BreadCrumb from "../../../../Components/BreadCrumb/BreadCrumb";
 import ProgressionForm from "./ProgressionForm";
 import ProgressionResults from "./ProgressionResultsDisplay";
 import ProgressionChart from "./ProgressionChart";
+import axios from "axios";
 import Toaster from "../../../../Utils/Toaster/Toaster";
 
 export default function ProgressionTracking() {
@@ -10,27 +11,51 @@ export default function ProgressionTracking() {
   const [results, setResults] = useState(null);
   const [error, setError] = useState(null);
 
+  // const handleSubmit = async (data) => {
+  //   setIsLoading(true);
+  //   setError(null);
+
+  //   try {
+  //     const response = await fetch("http://localhost:8000/api/v1/predict/", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(data),
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error(`Error: ${response.status}`);
+  //     }
+
+  //     const resultData = await response.json();
+  //     setResults(resultData);
+  //   } catch (err) {
+  //     setError(err.message || "Failed to predict progression");
+  //     console.error("Error predicting progression:", err);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
   const handleSubmit = async (data) => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:8000/api/v1/predict/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await axios.post(
+        "https://dg-progression-tracking-service-341015716129.asia-southeast1.run.app/predict",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      }
-
-      const resultData = await response.json();
-      setResults(resultData);
+      setResults(response.data);
     } catch (err) {
-      setError(err.message || "Failed to predict progression");
+      setError(err.response?.data?.message || "Failed to predict progression");
       console.error("Error predicting progression:", err);
     } finally {
       setIsLoading(false);

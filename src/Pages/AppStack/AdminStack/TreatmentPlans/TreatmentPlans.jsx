@@ -8,8 +8,8 @@ import TreatmentForm from "./TreatmentForm";
 
 export default function TreatmentPlans() {
   const [loading, setLoading] = useState(false);
-  const [treatmentPlan, setTreatmentPlan] = useState(null); // State to store the treatment plan result
-  const navigate = useNavigate(); // Using useNavigate hook
+  const [treatmentPlan, setTreatmentPlan] = useState(null);
+  const navigate = useNavigate();
 
   const handleFormSubmit = async (formData, availableDate) => {
     if (
@@ -61,7 +61,10 @@ export default function TreatmentPlans() {
   return (
     <main className="main-content-wrapper">
       <div className="container">
-        <BreadCrumb page={"Treatment Plans"} icon={"fa-solid fa-file-contract"} />
+        <BreadCrumb
+          page={"Treatment Plans"}
+          icon={"fa-solid fa-file-contract"}
+        />
         <div className="row">
           <div className="col-xl-12 col-12 mb-5">
             <div className="card h-100 card">
