@@ -71,18 +71,19 @@ const ProgressionForm = ({ onSubmit, isLoading, onReset }) => {
   return (
     <div className="card shadow-sm border-0">
       <div className="card-header bg-white py-3 border-0">
-        <h4 className="mb-0 fw-bold text-primary">Progression Prediction</h4>
+        <h4 className="mb-0 fw-bold text-primary">Progression Tracking</h4>
       </div>
       <div className="card-body">
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <div className="d-flex justify-content-between align-items-center mb-3">
-              <label className="form-label fw-medium mb-0">
+              {/* <label className="form-label fw-medium mb-0">
                 Patient Visits
-              </label>
+              </label> */}
+              <h6 className="text-primary fw-bold mb-0">Patient Visit</h6>
               <button
                 type="button"
-                className="btn btn-sm btn-outline-primary px-3"
+                className="btn btn-md btn-outline-primary px-3"
                 onClick={handleAddVisit}
               >
                 <i className="fas fa-plus me-1"></i> Add Visit
@@ -108,7 +109,7 @@ const ProgressionForm = ({ onSubmit, isLoading, onReset }) => {
                   </div>
                   <div className="row g-3">
                     <div className="col-md-4">
-                      <label className="form-label small">
+                      <label className="form-label">
                         MMSE Score (0-30)
                       </label>
                       <input
@@ -125,7 +126,7 @@ const ProgressionForm = ({ onSubmit, isLoading, onReset }) => {
                       <small className="text-muted">Higher is better</small>
                     </div>
                     <div className="col-md-4">
-                      <label className="form-label small">
+                      <label className="form-label">
                         CDR Score (0-3)
                       </label>
                       <input
@@ -143,7 +144,7 @@ const ProgressionForm = ({ onSubmit, isLoading, onReset }) => {
                       <small className="text-muted">Lower is better</small>
                     </div>
                     <div className="col-md-4">
-                      <label className="form-label small">Patient Age</label>
+                      <label className="form-label">Patient Age</label>
                       <input
                         type="number"
                         className="form-control form-control-sm"
@@ -169,7 +170,7 @@ const ProgressionForm = ({ onSubmit, isLoading, onReset }) => {
               </h6>
               <div className="row g-3">
                 <div className="col-md-6">
-                  <label className="form-label small">
+                  <label className="form-label">
                     Number of Future Visits
                   </label>
                   <input
@@ -183,7 +184,7 @@ const ProgressionForm = ({ onSubmit, isLoading, onReset }) => {
                   />
                 </div>
                 <div className="col-md-6">
-                  <label className="form-label small">
+                  <label className="form-label">
                     Interval Between Visits (months)
                   </label>
                   <input
