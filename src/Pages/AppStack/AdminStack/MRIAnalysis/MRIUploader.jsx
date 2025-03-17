@@ -3,7 +3,7 @@ import axios from "axios";
 import ResultsDisplay from "./ResultsDisplay";
 
 const API_URL =
-  "https://dg-mri-analysis-dementia-level-service-341015716129.asia-southeast1.run.app/predict/";
+  "https://api-gateway-341015716129.asia-southeast1.run.app/api/v1/mri-service/predict/";
 
 const MRIUploader = () => {
   const [file, setFile] = useState(null);
@@ -47,8 +47,6 @@ const MRIUploader = () => {
       setResults({
         dementia_level: data.predicted_class,
         confidence: data.confidence_scores[data.predicted_class],
-        regions_affected: data.affected_regions || [],
-        // recommendations: data.recommendations || "Consult a neurologist for further assessment.",
       });
     } catch (err) {
       console.error("Upload error:", err);
@@ -56,6 +54,19 @@ const MRIUploader = () => {
     }
 
     setLoading(false);
+  };
+
+  // Handle drag-and-drop
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const droppedFile = event.dataTransfer.files[0];
+    if (droppedFile) {
+      handleFileChange(droppedFile);
+    }
   };
 
   // Reset form for new analysis
@@ -78,7 +89,7 @@ const MRIUploader = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="Enter patient id"
+              placeholder="Enter Patient ID"
               value={patientId}
               onChange={(e) => setPatientId(e.target.value)}
             />
@@ -90,7 +101,7 @@ const MRIUploader = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="Enter patient name"
+              placeholder="Enter Patient Name"
               value={patientName}
               onChange={(e) => setPatientName(e.target.value)}
             />
@@ -102,6 +113,8 @@ const MRIUploader = () => {
               filePreview ? "border-primary" : "border-secondary"
             }`}
             onClick={() => fileInputRef.current.click()}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
             style={{ minHeight: "200px", cursor: "pointer" }}
           >
             <input
@@ -150,6 +163,7 @@ const MRIUploader = () => {
           patientId={patientId}
           patientName={patientName}
           imagePreview={filePreview}
+          file={file}
           onReset={handleReset}
         />
       )}

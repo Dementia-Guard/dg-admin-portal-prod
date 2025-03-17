@@ -12,10 +12,13 @@ export default function RecentPatients() {
         currentDate.setMonth(currentDate.getMonth() - 1)
       );
 
-      const patientsCollection = collection(db, "patients");
+      // Convert lastMonthDate to string in 'YYYY-MM-DD' format
+      const lastMonthString = lastMonthDate.toISOString().split("T")[0];
+
+      const patientsCollection = collection(db, "patients_h");
       const recentPatientsQuery = query(
         patientsCollection,
-        where("createdAt", ">=", lastMonthDate) // Assuming `createdAt` is a timestamp field in Firestore
+        where("attendedDate", ">=", lastMonthString)
       );
 
       const patientsSnapshot = await getDocs(recentPatientsQuery);
@@ -43,25 +46,39 @@ export default function RecentPatients() {
               <table className="table table-centered table-borderless text-nowrap table-hover">
                 <thead className="bg-light">
                   <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Telephone</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Caregiver Email</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Dementia Level</th>
+                    <th scope="col">MRI Scan Status</th>
+                    <th scope="col">Next Appointment</th>
                   </tr>
                 </thead>
                 <tbody>
                   {patients.length > 0 ? (
                     patients.map((patient) => (
                       <tr key={patient.id}>
-                        <td>{patient.name}</td>
-                        <td>{patient.telephone}</td>
-                        <td>{patient.email}</td>
-                        <td>{patient.caregiverEmail}</td>
+                        <td>{patient.firstName}</td>
+                        <td>{patient.phoneNumber}</td>
+                        <td>{patient.dementiaLevel}</td>
+                        <td>{patient.mriScanStatus}</td>
+                        <td>
+                              {new Date(
+                                patient.nextAppointmentDate
+                              ).toLocaleString("en-US", {
+                                weekday: "short", // "Monday"
+                                year: "numeric", // "2024"
+                                month: "short", // "March"
+                                day: "numeric", // "18"
+                                hour: "2-digit", // "12"
+                                minute: "2-digit", // "00"
+                                hour12: true, // "AM/PM"
+                              })}
+                            </td>
                       </tr>
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="4" className="text-center">
+                      <td colSpan="5" className="text-center">
                         No patients found from the last month.
                       </td>
                     </tr>

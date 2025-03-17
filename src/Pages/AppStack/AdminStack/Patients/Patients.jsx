@@ -12,7 +12,7 @@ export default function Patients() {
 
   useEffect(() => {
     const getPatients = async () => {
-      const patientsCollection = collection(db, "patients");
+      const patientsCollection = collection(db, "patients_h");
       const patientsSnapshot = await getDocs(patientsCollection);
       const patientsList = patientsSnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -27,9 +27,9 @@ export default function Patients() {
   // Filter patients based on search query
   const filteredPatients = patients.filter(
     (patient) =>
-      patient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      patient.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      patient.telephone.toLowerCase().includes(searchQuery.toLowerCase())
+      patient.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      patient.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      patient.dementiaLevel.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   // Pagination logic
@@ -70,49 +70,44 @@ export default function Patients() {
                   <table className="table table-centered table-hover table-borderless mb-0 table-with-checkbox text-nowrap">
                     <thead className="bg-light">
                       <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Caregiver Email</th>
-                        <th />
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        {/* <th>CaregiverEmail</th> */}
+                        <th scope="col">Phone Number</th>
+                        <th scope="col">Dementia Level</th>
+                        <th scope="col">MRI Status</th>
+                        <th scope="col">Next Appointment</th>
                       </tr>
                     </thead>
                     <tbody>
                       {displayedPatients.length > 0 ? (
                         displayedPatients.map((patient) => (
                           <tr key={patient.id}>
-                            <td>{patient.name}</td>
-                            <td>{patient.email}</td>
-                            <td>{patient.telephone || "-"}</td>
-                            <td>{patient.caregiverEmail || "-"}</td>
+                            <td>{patient.firstName}</td>
+                            <td>{patient.lastName}</td>
+                            {/* <td>{patient.caregiverEmail || "-"}</td> */}
+                            <td>{patient.phoneNumber}</td>
+                            <td>{patient.dementiaLevel}</td>
+                            <td>{patient.mriScanStatus}</td>
+                            {/* <td>{new Date(patient.nextAppointmentDate).toLocaleString()}</td> */}
                             <td>
-                              <div className="dropdown">
-                                <a
-                                  href="#"
-                                  className="text-reset"
-                                  data-bs-toggle="dropdown"
-                                >
-                                  <i className="feather-icon icon-more-vertical fs-5" />
-                                </a>
-                                <ul className="dropdown-menu">
-                                  <li>
-                                    <a className="dropdown-item" href="#">
-                                      Edit
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a className="dropdown-item" href="#">
-                                      Delete
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
+                              {new Date(
+                                patient.nextAppointmentDate
+                              ).toLocaleString("en-US", {
+                                weekday: "short", // "Monday"
+                                year: "numeric", // "2024"
+                                month: "short", // "March"
+                                day: "numeric", // "18"
+                                hour: "2-digit", // "12"
+                                minute: "2-digit", // "00"
+                                hour12: true, // "AM/PM"
+                              })}
                             </td>
                           </tr>
                         ))
                       ) : (
                         <tr>
-                          <td colSpan="5" className="text-center">
+                          <td colSpan="6" className="text-center">
                             No patients found.
                           </td>
                         </tr>

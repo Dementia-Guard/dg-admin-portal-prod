@@ -1,9 +1,9 @@
 import React from "react";
 import DashBanner from "./DashBanner/DashBanner";
-import DashEarnings from "./DashEarnings/DashEarnings";
-import DashOrders from "./DashOrders/DashOrders";
-import DashCustomer from "./DashCustomer/DashCustomer";
-import RecentOrders from "./RecentOrders/RecentOrders";
+import DashCompletedMRI from "./DashCompletedMRI/DashCompletedMRI";
+import DashPendingMRI from "./DashPendingMRI/DashPendingMRI";
+import DashPatient from "./DashPatient/DashPatient";
+import RecentPatients from "./RecentPatients/RecentPatients";
 import NotiBanner from "./NotificationBanner/NotiBanner";
 
 export default function AdminDashboard() {
@@ -13,12 +13,12 @@ export default function AdminDashboard() {
         <DashBanner />
         <div className="table-responsive-xl mb-6 mb-lg-0">
           <div className="row flex-nowrap pb-3 pb-lg-0">
-            <DashCustomer />
-            <DashEarnings />
-            <DashOrders />
+            <DashPatient />
+            <DashCompletedMRI />
+            <DashPendingMRI />
           </div>
         </div>
-        <RecentOrders />
+        <RecentPatients />
       </section>
     </main>
   );

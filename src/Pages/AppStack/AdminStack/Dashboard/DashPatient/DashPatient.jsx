@@ -8,14 +8,14 @@ import {
 } from "firebase/firestore";
 import { db } from "../../../../../Firebase/config";
 
-export default function DashCustomer() {
+export default function DashPatient() {
   const [totalPatients, setTotalPatients] = useState(0);
   const [newPatientsLastWeek, setNewPatientsLastWeek] = useState(0);
 
   useEffect(() => {
     const getPatients = async () => {
       // Get the total number of patients
-      const patientsSnapshot = await getDocs(collection(db, "patients"));
+      const patientsSnapshot = await getDocs(collection(db, "patients_h"));
       setTotalPatients(patientsSnapshot.size);
 
       // Get the patients added in the last week

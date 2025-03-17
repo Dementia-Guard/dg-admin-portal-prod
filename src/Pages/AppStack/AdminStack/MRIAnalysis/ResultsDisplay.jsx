@@ -1,6 +1,13 @@
 import React from "react";
-import { db } from "../../../../Firebase/config";
-import { getDoc, updateDoc, doc } from "firebase/firestore";
+import { db, storage } from "../../../../Firebase/config";
+import {
+  getDocs,
+  updateDoc,
+  collection,
+  query,
+  where,
+} from "firebase/firestore";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import Toaster from "../../../../Utils/Toaster/Toaster";
 
 const ResultsDisplay = ({
@@ -50,6 +57,47 @@ const ResultsDisplay = ({
     );
   };
 
+  const saveImageToFirebase = async () => {
+    try {
+      if (!imagePreview) {
+        Toaster.justToast("error", "No MRI image to upload.");
+        return null; // Return null if no image
+      }
+
+      const storageRef = ref(
+        storage,
+        `MRI_Images/${patientId}_${new Date().toISOString()}`
+      );
+      const uploadTask = uploadBytesResumable(storageRef, imagePreview);
+
+      // Wait for the upload task to complete
+      await new Promise((resolve, reject) => {
+        uploadTask.on(
+          "state_changed",
+          null,
+          (error) => {
+            console.error("Error uploading image:", error);
+            Toaster.justToast("error", "Failed to upload MRI image.");
+            reject(error); // Reject on error
+          },
+          resolve // Resolve once completed
+        );
+      });
+
+      // Once the task is completed, get the download URL
+      const snapshot = uploadTask.snapshot;
+      const imageUrl = await getDownloadURL(snapshot.ref); // Access ref from snapshot
+      return imageUrl; // Return the URL
+    } catch (error) {
+      console.error("Error uploading image to Firebase:", error);
+      Toaster.justToast(
+        "error",
+        "Failed to upload MRI image. Please try again."
+      );
+      return null; // Return null on error
+    }
+  };
+
   const saveResultsToFirebase = async () => {
     try {
       // Check if patientId is provided
@@ -58,28 +106,32 @@ const ResultsDisplay = ({
         return; // Exit the function if no patientId is provided
       }
 
-      // Get the reference to the patient document using the patientId
-      const patientDocRef = doc(db, "patients", patientId);
+      // Create a reference to the "patients" collection
+      const patientsCollectionRef = collection(db, "patients");
 
-      // Get the document snapshot
-      const patientDocSnap = await getDoc(patientDocRef);
+      // Create a query to find the document where the 'patientId' field matches the given patientId
+      const q = query(
+        patientsCollectionRef,
+        where("patientId", "==", patientId)
+      );
 
-      if (patientDocSnap.exists()) {
-        // Check if the dementiaLevel attribute already exists
-        if (patientDocSnap.data().dementiaLevel) {
-          // If dementiaLevel exists, update it
+      // Fetch the documents that match the query
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        const patientDocRef = querySnapshot.docs[0].ref;
+        const imageUrl = await saveImageToFirebase();
+
+        if (imageUrl) {
           await updateDoc(patientDocRef, {
             dementiaLevel: results.dementia_level,
-            timestamp: new Date(),
+            mriImage: imageUrl,
+            mriScanTimeStamp: new Date(),
           });
-          Toaster.justToast("success", "Dementia level updated successfully!");
-        } else {
-          // If dementiaLevel doesn't exist, add it
-          await updateDoc(patientDocRef, {
-            dementiaLevel: results.dementia_level,
-            timestamp: new Date(),
-          });
-          Toaster.justToast("success", "Dementia level saved successfully!");
+          Toaster.justToast(
+            "success",
+            "MRI Image uploaded and Dementia Level updated successfully!"
+          );
         }
       } else {
         // If no patient with this ID exists, show an error
@@ -130,32 +182,6 @@ const ResultsDisplay = ({
                 </span>
                 {getConfidenceIndicator(results.confidence)}
               </div>
-
-              {/* Affected Brain Regions */}
-              {/* {results.regions_affected && (
-                <div className="mb-3">
-                  <label className="form-label fw-semibold">
-                    Affected Brain Regions:
-                  </label>
-                  <ul className="list-group list-group-flush">
-                    {results.regions_affected.map((region, index) => (
-                      <li key={index} className="list-group-item">
-                        {region}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )} */}
-
-              {/* Recommendations */}
-              {/* {results.recommendations && (
-                <div className="mb-3">
-                  <label className="form-label fw-semibold">
-                    Recommendations:
-                  </label>
-                  <p className="text-muted">{results.recommendations}</p>
-                </div>
-              )} */}
             </div>
           </div>
         </div>
@@ -163,12 +189,6 @@ const ResultsDisplay = ({
 
       {/* Buttons */}
       <div className="d-flex flex-column flex-md-row justify-content-between mt-3">
-        {/* <button
-          className="btn btn-outline-secondary mb-2 mb-md-0"
-          onClick={() => window.print()}
-        >
-          <i class="fa-solid fa-print"></i> Print Results
-        </button> */}
         <button className="btn btn-primary mb-2 mb-md-0" onClick={onReset}>
           <i className="fa fa-arrow-rotate-right"></i> Analyze Another MRI
         </button>

@@ -124,7 +124,7 @@ const ProgressionResults = ({ results }) => {
               {predictions.map((prediction, index) => (
                 <tr key={index}>
                   <td>Visit {prediction.visit_number}</td>
-                  <td>{prediction.age}</td>
+                  <td>{Math.floor(prediction.age)}</td>
                   <td>{prediction.mmse}</td>
                   <td>
                     <span className={prediction.mmse_change < 0 ? 'text-danger' : 'text-success'}>
