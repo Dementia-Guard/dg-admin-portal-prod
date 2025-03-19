@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
 import ResultsDisplay from "./ResultsDisplay";
+import Toaster from "../../../../Utils/Toaster/Toaster";
 
 const API_URL =
   "https://api-gateway-341015716129.asia-southeast1.run.app/api/v1/mri-service/predict/";
@@ -29,6 +30,7 @@ const MRIUploader = () => {
   const handleUpload = async () => {
     if (!file) {
       setError("Please select an MRI image.");
+      Toaster.justToast("error", "Please select an MRI image.");
       return;
     }
 
@@ -51,6 +53,7 @@ const MRIUploader = () => {
     } catch (err) {
       console.error("Upload error:", err);
       setError("Prediction failed. Please try again.");
+      Toaster.justToast("error", "Prediction failed. Please try again.");
     }
 
     setLoading(false);

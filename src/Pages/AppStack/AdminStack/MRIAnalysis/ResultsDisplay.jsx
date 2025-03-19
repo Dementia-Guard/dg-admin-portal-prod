@@ -6,6 +6,7 @@ import {
   collection,
   query,
   where,
+  arrayUnion
 } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import Toaster from "../../../../Utils/Toaster/Toaster";
@@ -15,6 +16,7 @@ const ResultsDisplay = ({
   patientId,
   patientName,
   imagePreview,
+  file,
   onReset,
 }) => {
   const getDementiaLevelClass = (level) => {
@@ -59,7 +61,7 @@ const ResultsDisplay = ({
 
   const saveImageToFirebase = async () => {
     try {
-      if (!imagePreview) {
+      if (!file) {
         Toaster.justToast("error", "No MRI image to upload.");
         return null; // Return null if no image
       }
@@ -68,7 +70,7 @@ const ResultsDisplay = ({
         storage,
         `MRI_Images/${patientId}_${new Date().toISOString()}`
       );
-      const uploadTask = uploadBytesResumable(storageRef, imagePreview);
+      const uploadTask = uploadBytesResumable(storageRef, file);
 
       // Wait for the upload task to complete
       await new Promise((resolve, reject) => {
@@ -107,7 +109,7 @@ const ResultsDisplay = ({
       }
 
       // Create a reference to the "patients" collection
-      const patientsCollectionRef = collection(db, "patients");
+      const patientsCollectionRef = collection(db, "patients_h");
 
       // Create a query to find the document where the 'patientId' field matches the given patientId
       const q = query(
@@ -126,7 +128,8 @@ const ResultsDisplay = ({
           await updateDoc(patientDocRef, {
             dementiaLevel: results.dementia_level,
             mriImage: imageUrl,
-            mriScanTimeStamp: new Date(),
+            mriScanStatus: "Completed",
+            mriScanTimestamp: arrayUnion(new Date()),
           });
           Toaster.justToast(
             "success",

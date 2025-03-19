@@ -25,9 +25,14 @@ export default function DashCompletedMRI() {
           ? patientData.mriScanTimestamp
           : [];
         // Convert ISO string timestamps to Date objects
-        const validDates = scanTimestamps
-          .map((ts) => (typeof ts === "string" ? new Date(ts) : null))
-          .filter((date) => date instanceof Date && !isNaN(date));
+        const validDates = scanTimestamps.map((ts) => {
+          if (typeof ts === "string") {
+            return new Date(ts); // Handle ISO string timestamps
+          } else if (ts && ts.toDate) {
+            return ts.toDate(); // Handle Firestore Timestamp
+          }
+          return null;
+        }).filter((date) => date instanceof Date && !isNaN(date));
 
         // Get latest scan date
         const latestScan =
