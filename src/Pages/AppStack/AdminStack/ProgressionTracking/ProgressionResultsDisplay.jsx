@@ -21,7 +21,7 @@ const ProgressionResults = ({ results }) => {
   return (
     <div className="card shadow-sm border-0">
       <div className="card-header bg-white py-3 border-0">
-        <h6 className="mb-0 fw-bold">Detailed Progression Analysis</h6>
+        <h4 className="mb-0 text-primary fw-bold">Detailed Progression Analysis</h4>
       </div>
       <div className="card-body">
         <div className="row mb-4">
@@ -99,7 +99,7 @@ const ProgressionResults = ({ results }) => {
           </div>
         </div>
 
-        <h6 className="fw-bold mb-3">Detailed Predictions</h6>
+        <h4 className="fw-bold text-primary mb-3">Detailed Predictions</h4>
         <div className="table-responsive">
           <table className="table table-hover border">
             <thead className="bg-light">

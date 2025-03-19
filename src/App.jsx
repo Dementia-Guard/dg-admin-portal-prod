@@ -29,6 +29,7 @@ import VendorDashboard from './Pages/AppStack/VendorStack/Dashboard/VendorDashbo
 import AdminDashboard from './Pages/AppStack/AdminStack/Dashboard/AdminDashboard';
 import AuthStack from './Pages/AuthStack/AuthStack';
 import DoctorAvailability from './Pages/AppStack/AdminStack/Availability/DoctorAvailability';
+import BookedAppointments from './Pages/AppStack/AdminStack/Appointments/BookedAppointments';
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
                 <Route path="progressionTracking" element={<ProgressionTracking />} />
                 <Route path="addCategory" element={<AddCategory />} />
                 <Route path="addAvailability" element={<DoctorAvailability />} />
+                <Route path="booked" element={<BookedAppointments />}/>
                 <Route path="editCategory/:id" element={<AddCategory />} />
                 <Route path="treatmentPlans" element={<TreatmentPlans />} />
                 <Route path="sellers" element={<Sellers />} />

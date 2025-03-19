@@ -39,24 +39,24 @@ const TreatmentResultsDisplay = ({ treatmentPlan }) => {
   return (
     <div className="container mt-5">
       <div className="card shadow-lg rounded border-0 bg-light">
-        <div className="card-header bg-primary text-white py-3">
-          <h3 className="mb-0 text-center text-white">
+        <div className="card-header bg-light text-white py-3">
+          <h4 className="mb-0 text-center text-primary">
             <i className="fas fa-clipboard-list me-2"></i>
             Treatment Plan
-          </h3>
+          </h4>
         </div>
-        <div className="card-body p-4">
-          <div className="row g-4">
+        <div className="card-body bg-light p-4">
+          <div className="row bg-light g-4">
             {/* Patient Information Section */}
             <div className="col-12 mb-3">
-              <div className="card bg-white shadow-sm border-0 rounded-3">
+              <div className="card bg-light shadow-sm border-0 rounded-3">
                 <div className="card-header bg-info bg-opacity-10 border-0">
                   <h5 className="text-white mb-0">
                     <i className="fas fa-user me-2"></i>
                     Patient Information
                   </h5>
                 </div>
-                <div className="card-body">
+                <div className="card-body bg-light">
                   <div className="row">
                     <div className="col-md-6 mb-3">
                       <div className="d-flex align-items-center">
@@ -91,7 +91,7 @@ const TreatmentResultsDisplay = ({ treatmentPlan }) => {
 
             {/* Treatment Details Section */}
             <div className="col-md-6 mb-3">
-              <div className="card h-100 bg-white shadow-sm border-0 rounded-3">
+              <div className="card h-100 bg-light shadow-sm border-0 rounded-3">
                 <div className="card-header bg-success bg-opacity-10 border-0">
                   <h5 className="text-white mb-0">
                     <i className="fas fa-brain me-2"></i>
@@ -130,7 +130,7 @@ const TreatmentResultsDisplay = ({ treatmentPlan }) => {
             </div>
 
             <div className="col-md-6 mb-3">
-              <div className="card h-100 bg-white shadow-sm border-0 rounded-3">
+              <div className="card h-100 bg-light shadow-sm border-0 rounded-3">
                 <div className="card-header bg-warning bg-opacity-10 border-0">
                   <h5 className="text-white mb-0">
                     <i className="fas fa-calendar-alt me-2"></i>
@@ -157,7 +157,7 @@ const TreatmentResultsDisplay = ({ treatmentPlan }) => {
 
             {/* Treatment Recommendations Section */}
             <div className="col-12">
-              <div className="card bg-white shadow-sm border-0 rounded-3">
+              <div className="card bg-light shadow-sm border-0 rounded-3">
                 <div className="card-header bg-primary bg-opacity-10 border-0">
                   <h5 className="text-white mb-0">
                     <i className="fas fa-list-check me-2"></i>

@@ -50,7 +50,7 @@ const ProgressionChart = ({ results }) => {
   return (
     <div ref={containerRef} className="card shadow-sm border-0 mb-4 overflow-hidden">
       <div className="card-header bg-white py-3 border-0">
-        <h6 className="mb-0 fw-bold">Progression Visualization</h6>
+        <h4 className="mb-0 text-primary fw-bold">Progression Visualization</h4>
       </div>
       <div className="card-body pt-0 pb-4">
         <div className="d-flex justify-content-end mb-2">
