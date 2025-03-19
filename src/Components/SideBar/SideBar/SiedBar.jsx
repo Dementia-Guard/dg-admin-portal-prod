@@ -95,6 +95,19 @@ export default function SideBar({ user }) {
                     </div>
                   </NavLink>
                 </li>
+                <li className="nav-item">
+                  <NavLink
+                    to={`/app/${user.Role.toLowerCase()}/addAvailability`}
+                    className="nav-link"
+                  >
+                    <div className="d-flex align-items-center">
+                      <span className="nav-link-icon">
+                        <i className="fa-solid fa-plus" />
+                      </span>
+                      <span className="nav-link-text">Availability</span>
+                    </div>
+                  </NavLink>
+                </li>
                 {/* <li className="nav-item">
                                     <NavLink to={`/app/${user.Role.toLowerCase()}/sellers`} className="nav-link">
                                         <div className="d-flex align-items-center">

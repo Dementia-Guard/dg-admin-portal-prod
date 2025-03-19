@@ -28,6 +28,7 @@ import CsrDashboard from './Pages/AppStack/CsrStack/Dashboard/CsrDashboard';
 import VendorDashboard from './Pages/AppStack/VendorStack/Dashboard/VendorDashboard';
 import AdminDashboard from './Pages/AppStack/AdminStack/Dashboard/AdminDashboard';
 import AuthStack from './Pages/AuthStack/AuthStack';
+import DoctorAvailability from './Pages/AppStack/AdminStack/Availability/DoctorAvailability';
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
                 <Route path="editProduct/:id" element={<AddProducts />} />
                 <Route path="progressionTracking" element={<ProgressionTracking />} />
                 <Route path="addCategory" element={<AddCategory />} />
+                <Route path="addAvailability" element={<DoctorAvailability />} />
                 <Route path="editCategory/:id" element={<AddCategory />} />
                 <Route path="treatmentPlans" element={<TreatmentPlans />} />
                 <Route path="sellers" element={<Sellers />} />
