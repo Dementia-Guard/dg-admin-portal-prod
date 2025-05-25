@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import Toaster from "../../../../Utils/Toaster/Toaster";
 import { collection, getDocs, query, where, doc, updateDoc, arrayRemove, setDoc } from "firebase/firestore";
 import { db } from "../../../../Firebase/config";
@@ -22,6 +20,8 @@ const TreatmentForm = ({ onSubmit, loading, doctorId }) => {
   const [canProceed, setCanProceed] = useState(false);
   const [availableSlots, setAvailableSlots] = useState([]);
   const [loadingSlots, setLoadingSlots] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [currentMonth, setCurrentMonth] = useState(new Date());
   const totalSteps = 4;
 
   // Check if current step's required fields are filled
@@ -203,6 +203,106 @@ const TreatmentForm = ({ onSubmit, loading, doctorId }) => {
     return timeSlot;
   };
 
+  // Calendar helper functions
+  const getDaysInMonth = (date) => {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+  };
+
+  const getFirstDayOfMonth = (date) => {
+    return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+  };
+
+  const isPastDate = (date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return date < today;
+  };
+
+  const isSameDate = (date1, date2) => {
+    return date1.getDate() === date2.getDate() &&
+           date1.getMonth() === date2.getMonth() &&
+           date1.getFullYear() === date2.getFullYear();
+  };
+
+  const handleDateSelect = (day) => {
+    const selectedDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
+    if (!isPastDate(selectedDate)) {
+      setAvailableDate(selectedDate);
+      setShowCalendar(false);
+    }
+  };
+
+  const navigateMonth = (direction) => {
+    const newMonth = new Date(currentMonth);
+    newMonth.setMonth(currentMonth.getMonth() + direction);
+    setCurrentMonth(newMonth);
+  };
+
+  const renderCalendar = () => {
+    const daysInMonth = getDaysInMonth(currentMonth);
+    const firstDay = getFirstDayOfMonth(currentMonth);
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"];
+    const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    const days = [];
+    
+    // Empty cells for days before the first day of month
+    for (let i = 0; i < firstDay; i++) {
+      days.push(<div key={`empty-${i}`} className="calendar-day empty"></div>);
+    }
+
+    // Days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
+      const isDisabled = isPastDate(date);
+      const isSelected = isSameDate(date, availableDate);
+      const isToday = isSameDate(date, new Date());
+
+      days.push(
+        <div
+          key={day}
+          className={`calendar-day ${isDisabled ? 'disabled' : ''} ${isSelected ? 'selected' : ''} ${isToday ? 'today' : ''}`}
+          onClick={() => !isDisabled && handleDateSelect(day)}
+        >
+          {day}
+        </div>
+      );
+    }
+
+    return (
+      <div className="modern-calendar">
+        <div className="calendar-header">
+          <button 
+            type="button"
+            className="calendar-nav-btn"
+            onClick={() => navigateMonth(-1)}
+          >
+            <i className="fa-solid fa-chevron-left"></i>
+          </button>
+          <h6 className="calendar-month">
+            {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
+          </h6>
+          <button 
+            type="button"
+            className="calendar-nav-btn"
+            onClick={() => navigateMonth(1)}
+          >
+            <i className="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+        <div className="calendar-weekdays">
+          {dayNames.map(day => (
+            <div key={day} className="calendar-weekday">{day}</div>
+          ))}
+        </div>
+        <div className="calendar-grid">
+          {days}
+        </div>
+      </div>
+    );
+  };
+
   // Field groups by step
   const stepFields = [
     ["firstName", "lastName", "age"],
@@ -264,8 +364,8 @@ const TreatmentForm = ({ onSubmit, loading, doctorId }) => {
   };
 
   return (
-    <div className="card border-0 shadow-lg rounded-4 overflow-hidden">
-      {/* Custom CSS for validation animation */}
+    <div className="card border-0 shadow-lg rounded-4 overflow-visible">
+      {/* Custom CSS for validation animation and modern calendar */}
       <style>
         {`
           @keyframes pulse-border {
@@ -288,6 +388,138 @@ const TreatmentForm = ({ onSubmit, loading, doctorId }) => {
           .time-slot.selected {
             border: 2px solid #0d6efd !important;
             background-color: rgba(13, 110, 253, 0.1) !important;
+          }
+          
+          /* Modern Calendar Styles */
+          .date-input-wrapper {
+            position: relative;
+          }
+          
+          .date-display {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+          }
+          
+          .date-display:hover {
+            background: #e9ecef;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+          }
+          
+          .modern-calendar {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            z-index: 1000;
+            padding: 20px;
+            margin-top: 8px;
+            border: 1px solid #e9ecef;
+          }
+          
+          .calendar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+          }
+          
+          .calendar-month {
+            font-weight: 600;
+            color: #0d6efd;
+            margin: 0;
+            font-size: 1.1rem;
+          }
+          
+          .calendar-nav-btn {
+            background: none;
+            border: none;
+            color: #6c757d;
+            font-size: 1.2rem;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+          }
+          
+          .calendar-nav-btn:hover {
+            background: #f8f9fa;
+            color: #0d6efd;
+          }
+          
+          .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-bottom: 8px;
+          }
+          
+          .calendar-weekday {
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #6c757d;
+            padding: 8px 4px;
+          }
+          
+          .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+          }
+          
+          .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            position: relative;
+          }
+          
+          .calendar-day:not(.empty):not(.disabled):hover {
+            background: rgba(13, 110, 253, 0.1);
+            color: #0d6efd;
+            transform: scale(1.05);
+          }
+          
+          .calendar-day.selected {
+            background: #0d6efd;
+            color: white;
+            box-shadow: 0 2px 8px rgba(13, 110, 253, 0.3);
+          }
+          
+          .calendar-day.today {
+            background: rgba(13, 110, 253, 0.1);
+            color: #0d6efd;
+            font-weight: 600;
+          }
+          
+          .calendar-day.today.selected {
+            background: #0d6efd;
+            color: white;
+          }
+          
+          .calendar-day.disabled {
+            color: #ced4da;
+            cursor: not-allowed;
+          }
+          
+          .calendar-day.empty {
+            cursor: default;
           }
         `}
       </style>
@@ -546,15 +778,26 @@ const TreatmentForm = ({ onSubmit, loading, doctorId }) => {
                 <label className="form-label text-secondary mb-3">
                   Select Your Preferred Date
                 </label>
-                <div className="position-relative">
-                  <DatePicker
-                    selected={availableDate}
-                    onChange={(date) => setAvailableDate(date)}
-                    className="form-control border-0 bg-light shadow-sm py-3 text-center"
-                    minDate={new Date()}
-                    dateFormat="MMMM d, yyyy"
-                    showPopperArrow={false}
-                  />
+                <div className="date-input-wrapper">
+                  <div 
+                    className="date-display"
+                    onClick={() => setShowCalendar(!showCalendar)}
+                  >
+                    <div className="d-flex align-items-center">
+                      <i className="fa-regular fa-calendar me-3 text-primary"></i>
+                      <span className="fw-medium">
+                        {availableDate.toLocaleDateString('en-US', {
+                          weekday: 'long',
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
+                        })}
+                      </span>
+                    </div>
+                    <i className={`fa-solid fa-chevron-${showCalendar ? 'up' : 'down'} text-primary`}></i>
+                  </div>
+                  
+                  {showCalendar && renderCalendar()}
                 </div>
                 
                 <div className="mt-4">
@@ -720,7 +963,7 @@ const TreatmentForm = ({ onSubmit, loading, doctorId }) => {
                   </>
                 ) : (
                   <>
-                    Generate Treatment Plan{" "}
+                    Generate Plan{" "}
                     <i className="fa-solid fa-file ms-2"></i>
                   </>
                 )}

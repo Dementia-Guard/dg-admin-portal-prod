@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 export default function NotFound() {
     const navigate = useNavigate()
     const handleBackToHome = () => {
-        navigate(-1)
+        navigate("/signIn")
     }
     return (
         <section>

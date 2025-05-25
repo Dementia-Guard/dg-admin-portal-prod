@@ -4,11 +4,11 @@ import SiedBar from './SideBar/SiedBar'
 import { useAuth } from '../../Context/AuthContext'
 
 export default function MainSideNav() {
-  const { user } = useAuth()
+  const { logout } = useAuth()
   return (
       <>
-          <SiedBar user={user}/>
-          <SideBarCanvas user={user}/>
+          <SiedBar  logout={logout}/>
+          <SideBarCanvas logout={logout}/>
     </>
   )
 }

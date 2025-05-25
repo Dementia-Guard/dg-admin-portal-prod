@@ -7,15 +7,18 @@ export default function Header() {
       <div className="container-fluid">
         <div className="d-flex justify-content-between align-items-center w-100">
           <div className="d-flex align-items-center">
-            <Link
-              className="text-inherit d-block d-xl-none me-4"
+            <button
+              className="btn d-block d-xl-none"
+              type="button"
               data-bs-toggle="offcanvas"
-              href="#offcanvasExample"
-              role="button"
+              data-bs-target="#offcanvasExample"
               aria-controls="offcanvasExample"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
             >
-              <i className="fa-solid fa-bars fs-3" />
-            </Link>
+              <i className="fa-solid fa-bars fs-3 text-dark" />
+            </button>
+
             <form role="search">
               <input
                 className="form-control"

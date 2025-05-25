@@ -45,14 +45,8 @@ function App() {
                 <Route index element={<AdminDashboard />} />
                 <Route path="dashboard" element={<AdminDashboard />} />
                 <Route path="mriAnalysis" element={<MRIAnalysis />} />
-                <Route
-                  path="progressionTracking"
-                  element={<ProgressionTracking />}
-                />
-                <Route
-                  path="addAvailability"
-                  element={<DoctorAvailability />}
-                />
+                <Route path="progressionTracking" element={<ProgressionTracking />}/>
+                <Route path="addAvailability" element={<DoctorAvailability />}/>
                 <Route path="booked" element={<BookedAppointments />} />
                 <Route path="treatmentPlans" element={<TreatmentPlans />} />
                 <Route path="patients" element={<Patients />} />

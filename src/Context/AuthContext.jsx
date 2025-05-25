@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import LocalStore from '../Store/LocalStore';
 
 // Create a context
@@ -8,16 +8,23 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [auth, setAuth] = useState(() => LocalStore.getAuth());
   const [user, setUser] = useState(() => LocalStore.getAuth()?.user);
+  const [loading, setLoading] = useState(true);
+
+  // Keep user in sync with auth
+  useEffect(() => {
+    setUser(auth?.user || null);
+    setLoading(false);
+  }, [auth]);
 
   // Method to check if auth is authenticated
   const isAuthenticated = () => !!auth;
-  
+
   // Method to check if auth has the required role
   const hasRole = (role) => auth?.user?.Role?.includes(role);
 
   // Login method (takes authData passed from the SignIn component)
   const login = (authData) => {
-    setAuth(authData); 
+    setAuth(authData);
     LocalStore.storeAuth(authData);
   };
 
@@ -25,7 +32,7 @@ export function AuthProvider({ children }) {
   const updateUser = (updatedUser) => {
     setUser(updatedUser);
     const updatedAuth = { ...auth, user: updatedUser };
-    setAuth(updatedAuth); 
+    setAuth(updatedAuth);
     LocalStore.storeAuth(updatedAuth);
   };
 
@@ -33,10 +40,11 @@ export function AuthProvider({ children }) {
   const logout = () => {
     LocalStore.removeAuth();
     setAuth(null);
+    setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ auth, user, isAuthenticated, hasRole, login, logout }}>
+    <AuthContext.Provider value={{ auth, user, isAuthenticated, hasRole, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
