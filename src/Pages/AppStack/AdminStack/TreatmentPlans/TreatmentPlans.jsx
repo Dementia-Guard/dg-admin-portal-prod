@@ -31,7 +31,7 @@ console.log("Form Data:", formData);
     setLoading(true);
     try {
       const response = await axios.post(
-        "https://dg-personalized-treatment-planning-service-341015716129.asia-southeast1.run.app/plan/",
+        "https://dg-personalized-treatment-planning-service-341015716129.asia-southeast1.run.app/plan",
         {
           id: formData.appointmentId || new Date().getTime().toString(),
           firstName: formData.firstName,
