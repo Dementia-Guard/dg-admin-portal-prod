@@ -11,33 +11,39 @@ export default function TreatmentPlans() {
   const [treatmentPlan, setTreatmentPlan] = useState(null);
   const navigate = useNavigate();
 
-  const handleFormSubmit = async (formData, availableDate) => {
+  const handleFormSubmit = async (formData) => {
     if (
       !formData.firstName ||
       !formData.lastName ||
       !formData.age ||
       !formData.cdrScore ||
       !formData.mmseScore ||
-      !formData.caregiverAvailability
+      !formData.caregiverAvailability ||
+      !formData.appointmentDate ||
+      !formData.appointmentTime
     ) {
       Toaster.justToast("error", "Please fill in all required fields.");
       return;
     }
 
+console.log("Form Data:", formData);
+
     setLoading(true);
     try {
       const response = await axios.post(
-        "https://dg-personalized-treatment-planning-service-341015716129.asia-southeast1.run.app/api/v1/treatment-plan/",
+        "https://dg-personalized-treatment-planning-service-341015716129.asia-southeast1.run.app/plan/",
         {
-          id: new Date().getTime().toString(),
+          id: formData.appointmentId || new Date().getTime().toString(),
           firstName: formData.firstName,
           lastName: formData.lastName,
+          fullName: `${formData.firstName} ${formData.lastName}`,
           age: Number(formData.age),
           cdrScore: Number(formData.cdrScore),
           mmseScore: Number(formData.mmseScore),
-          additionalNotes: formData.additionalNotes,
-          fullName: `${formData.firstName} ${formData.lastName}`,
           caregiverAvailability: formData.caregiverAvailability.toUpperCase(),
+          additionalNotes: formData.additionalNotes,
+          appointmentDate: formData.appointmentDate,
+          timeSlot: formData.appointmentTime,
         },
         {
           headers: { "Content-Type": "application/json" },
