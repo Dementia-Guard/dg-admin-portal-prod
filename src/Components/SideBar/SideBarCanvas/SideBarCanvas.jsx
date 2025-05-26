@@ -9,7 +9,7 @@ export default function SideBarCanvas({ logout }) {
       id="offcanvasExample"
     >
       <div className="navbar-vertical">
-        <div className="px-4 py-5 d-flex justify-content-between align-items-center">
+        <div className="px-5 py-5 d-flex justify-content-between align-items-center gap-5">
           <NavLink end={true} to={"dashboard"} className="navbar-brand">
             <img
               className="img-fluid"
@@ -104,6 +104,7 @@ export default function SideBarCanvas({ logout }) {
                 </div>
               </NavLink>
             </li>
+            <hr className="bordered" />
             <li className="nav-item">
               <button onClick={() => logout()} className="nav-link">
                 <div className="d-flex align-items-center">

@@ -13,6 +13,7 @@ export default function DashBanner() {
   const navToPatients = () => {
     navigate(`/app/${user.Role.toLowerCase()}/patients`);
   };
+
   return (
     <div className="row mb-8">
       <div className="col-md-12">
@@ -20,21 +21,21 @@ export default function DashBanner() {
         <div
           className="card-lg bg-light p-8 border-0 rounded-4"
           style={{
-            backgroundImage: "url(/assets/images/banner/dg-doc-banner.jpg)",
+            backgroundImage: "url(/assets/images/banner/dg-doc-banner.png)",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
-            backgroundPosition: "top",
+            backgroundPosition: "",
           }}
         >
           <div className="card-body">
-            <h1 className="text-capitalize">Hi Doctor {user.FirstName} 👋</h1>
-            <p className="text-capitalize">
-              Tasks are waiting , until your services to the DementiaGuard.
+            <h1 className="text-capitalize text-dark text-sm-primary">
+              Hi Doctor {user.FirstName} 👋
+            </h1>
+            <p className="text-capitalize fs-5 d-md-block d-none">
+              Work awaits your DementiaGuard service
             </p>
             <button
-              onClick={() => {
-                navToPatients();
-              }}
+              onClick={navToPatients}
               className="btn btn-primary"
             >
               See All Patients

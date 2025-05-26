@@ -114,7 +114,7 @@ export default function BookedAppointments({ doctorId }) {
           icon={"fas fa-calendar-check"}
         />
 
-        <div className="px-4 py-4">
+        <div className="card px-4 py-4">
           <h4 className="mb-4 fw-bold text-primary">Booked Appointments</h4>
 
           <AppointmentStats

@@ -69,149 +69,258 @@ const ProgressionForm = ({ onSubmit, isLoading, onReset }) => {
   };
 
   return (
-    <div className="card shadow-sm border-0">
-      <div className="card-header bg-white py-3 border-0">
-        <h4 className="mb-0 fw-bold text-primary">Predict Progression Tracking</h4>
+    <div className="card rounded-4 overflow-hidden">
+      {/* Modern Header with Gradient */}
+      <div className="card-header bg-gradient-primary text-white border-0 p-4">
+        <div className="d-flex align-items-center">
+          <div>
+            <h4 className="mb-1 fw-bold text-primary">
+              Patient Assessment Form
+            </h4>
+          </div>
+        </div>
       </div>
-      <div className="card-body">
+
+      <div className="card-body p-4">
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              {/* <label className="form-label fw-medium mb-0">
-                Patient Visits
-              </label> */}
-              <h4 className="text-primary fw-bold mb-0">Patient Visit</h4>
+          {/* Patient Visits Section */}
+          <div className="mb-5">
+            <div className="d-flex justify-content-between align-items-center mb-4">
+              <div className="d-flex align-items-center">
+                <div>
+                  <h5 className="mb-1 fw-bold text-primary">Patient Visits</h5>
+                  <p className="mb-0 text-muted small">
+                    Add multiple visits for comprehensive analysis
+                  </p>
+                </div>
+              </div>
               <button
                 type="button"
-                className="btn btn-md btn-outline-primary px-3"
+                className="btn btn-primary px-4 py-2 shadow-sm"
                 onClick={handleAddVisit}
+                disabled={isLoading}
               >
-                <i className="fas fa-plus me-1"></i> Add Visit
+                <i className="fas fa-plus me-2"></i>
+                Add Visit
               </button>
             </div>
 
-            {visits.map((visit, index) => (
-              <div key={index} className="card border mb-3">
-                <div className="card-body py-3">
-                  <div className="d-flex justify-content-between align-items-center mb-3">
-                    <h6 className="mb-0 fw-bold text-primary fw-medium">
-                      {index === 0 ? "Baseline Visit" : `Visit ${index}`}
-                    </h6>
-                    {visits.length > 1 && (
-                      <button
-                        type="button"
-                        className="btn btn-sm btn-outline-danger"
-                        onClick={() => handleRemoveVisit(index)}
-                      >
-                        <i className="fas fa-times"></i>
-                      </button>
-                    )}
-                  </div>
-                  <div className="row g-3">
-                    <div className="col-md-4">
-                      <label className="form-label">
-                        MMSE Score (0-30)
-                      </label>
-                      <input
-                        type="number"
-                        className="form-control form-control-sm"
-                        value={visit.mmse}
-                        onChange={(e) =>
-                          handleVisitChange(index, "mmse", e.target.value)
-                        }
-                        min="0"
-                        max="30"
-                        required
-                      />
-                      <small className="text-muted">Higher is better</small>
-                    </div>
-                    <div className="col-md-4">
-                      <label className="form-label">
-                        CDR Score (0-3)
-                      </label>
-                      <input
-                        type="number"
-                        className="form-control form-control-sm"
-                        value={visit.cdr}
-                        onChange={(e) =>
-                          handleVisitChange(index, "cdr", e.target.value)
-                        }
-                        min="0"
-                        max="3"
-                        step="0.5"
-                        required
-                      />
-                      <small className="text-muted">Lower is better</small>
-                    </div>
-                    <div className="col-md-4">
-                      <label className="form-label">Patient Age</label>
-                      <input
-                        type="number"
-                        className="form-control form-control-sm"
-                        value={visit.age}
-                        onChange={(e) =>
-                          handleVisitChange(index, "age", e.target.value)
-                        }
-                        min="0"
-                        required
-                      />
-                      <small className="text-muted">Years</small>
+            <div className="row g-3">
+              {visits.map((visit, index) => (
+                <div key={index} className="col-12">
+                  <div className="card border-2 border-light rounded-4 shadow-sm hover-shadow transition-all">
+                    <div className="card-body p-4">
+                      <div className="d-flex justify-content-between align-items-center mb-4">
+                        <div className="d-flex align-items-center">
+                          <div
+                            className={`badge ${
+                              index === 0 ? "bg-primary" : "bg-primary"
+                            } rounded-pill px-3 py-2 me-3`}
+                          >
+                            <i
+                              className={`fas ${
+                                index === 0 ? "fa-star" : "fa-calendar-alt"
+                              } me-1`}
+                            ></i>
+                            {index === 0 ? "Baseline Visit" : `Visit ${index}`}
+                          </div>
+                        </div>
+                        {visits.length > 1 && (
+                          <button
+                            type="button"
+                            className="btn btn-outline-danger btn-sm rounded-pill px-3"
+                            onClick={() => handleRemoveVisit(index)}
+                            disabled={isLoading}
+                          >
+                            <i className="fas fa-trash-alt me-1"></i>
+                            Remove
+                          </button>
+                        )}
+                      </div>
+
+                      <div className="row g-4">
+                        <div className="col-md-4">
+                          <div className="form-floating">
+                            <input
+                              type="number"
+                              className="form-control rounded-3 border-2"
+                              id={`mmse-${index}`}
+                              value={visit.mmse}
+                              onChange={(e) =>
+                                handleVisitChange(index, "mmse", e.target.value)
+                              }
+                              min="0"
+                              max="30"
+                              placeholder="MMSE Score"
+                              required
+                              disabled={isLoading}
+                            />
+                            <label
+                              htmlFor={`mmse-${index}`}
+                              className="text-muted"
+                            >
+                              MMSE Score (0-30)
+                            </label>
+                          </div>
+                          <div className="mt-2 px-3">
+                            <small className="text-primary">
+                              <i className="fas fa-info-circle me-1"></i>
+                              Higher scores indicate better cognitive function
+                            </small>
+                          </div>
+                        </div>
+
+                        <div className="col-md-4">
+                          <div className="form-floating">
+                            <input
+                              type="number"
+                              className="form-control rounded-3 border-2"
+                              id={`cdr-${index}`}
+                              value={visit.cdr}
+                              onChange={(e) =>
+                                handleVisitChange(index, "cdr", e.target.value)
+                              }
+                              min="0"
+                              max="3"
+                              step="0.5"
+                              placeholder="CDR Score"
+                              required
+                              disabled={isLoading}
+                            />
+                            <label
+                              htmlFor={`cdr-${index}`}
+                              className="text-muted"
+                            >
+                              CDR Score (0-3)
+                            </label>
+                          </div>
+                          <div className="mt-2 px-3">
+                            <small className="text-primary">
+                              <i className="fas fa-info-circle me-1"></i>
+                              Lower scores indicate better function
+                            </small>
+                          </div>
+                        </div>
+
+                        <div className="col-md-4">
+                          <div className="form-floating">
+                            <input
+                              type="number"
+                              className="form-control rounded-3 border-2"
+                              id={`age-${index}`}
+                              value={visit.age}
+                              onChange={(e) =>
+                                handleVisitChange(index, "age", e.target.value)
+                              }
+                              min="0"
+                              placeholder="Patient Age"
+                              required
+                              disabled={isLoading}
+                            />
+                            <label
+                              htmlFor={`age-${index}`}
+                              className="text-muted"
+                            >
+                              Patient Age
+                            </label>
+                          </div>
+                          <div className="mt-2 px-3">
+                            <small className="text-primary">
+                              <i className="fas fa-info-circle me-1"></i>
+                              Age in years at time of visit
+                            </small>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
-          <div className="card border mb-4">
-            <div className="card-body py-3">
-              <h6 className="mb-3 fw-bold text-primary fw-medium">
-                Prediction Settings
-              </h6>
-              <div className="row g-3">
-                <div className="col-md-6">
-                  <label className="form-label">
-                    Number of Future Visits
-                  </label>
-                  <input
-                    type="number"
-                    className="form-control form-control-sm"
-                    value={numFutureVisits}
-                    onChange={(e) => setNumFutureVisits(e.target.value)}
-                    min="1"
-                    max="10"
-                    required
-                  />
+          {/* Prediction Settings Section */}
+          <div className="card border-2 border-light rounded-4 shadow-sm mb-4">
+            <div className="card-body p-4">
+              <div className="d-flex align-items-center mb-4">
+                <div>
+                  <h5 className="mb-1 fw-bold text-primary">
+                    Prediction Parameters
+                  </h5>
+                  <p className="mb-0 text-muted small">
+                    Configure future visit predictions
+                  </p>
                 </div>
+              </div>
+
+              <div className="row g-4">
                 <div className="col-md-6">
-                  <label className="form-label">
-                    Interval Between Visits (months)
-                  </label>
-                  <input
-                    type="number"
-                    className="form-control form-control-sm"
-                    value={intervalMonths}
-                    onChange={(e) => setIntervalMonths(e.target.value)}
-                    min="1"
-                    required
-                  />
+                  <div className="form-floating">
+                    <input
+                      type="number"
+                      className="form-control rounded-3 border-2"
+                      id="numFutureVisits"
+                      value={numFutureVisits}
+                      onChange={(e) => setNumFutureVisits(e.target.value)}
+                      min="1"
+                      max="10"
+                      placeholder="Number of Future Visits"
+                      required
+                      disabled={isLoading}
+                    />
+                    <label htmlFor="numFutureVisits" className="text-muted">
+                      Future Visits to Predict
+                    </label>
+                  </div>
+                  <div className="mt-2 px-3">
+                    <small className="text-primary">
+                      <i className="fas fa-lightbulb me-1"></i>
+                      Recommend 1-3 visits for optimal analysis
+                    </small>
+                  </div>
+                </div>
+
+                <div className="col-md-6">
+                  <div className="form-floating">
+                    <input
+                      type="number"
+                      className="form-control rounded-3 border-2"
+                      id="intervalMonths"
+                      value={intervalMonths}
+                      onChange={(e) => setIntervalMonths(e.target.value)}
+                      min="1"
+                      placeholder="Interval in Months"
+                      required
+                      disabled={isLoading}
+                    />
+                    <label htmlFor="intervalMonths" className="text-muted">
+                      Visit Interval (Months)
+                    </label>
+                  </div>
+                  <div className="mt-2 px-3">
+                    <small className="text-primary">
+                      <i className="fas fa-lightbulb me-1"></i>
+                      Standard intervals: 3, 6, or 12 months
+                    </small>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="d-flex justify-content-end">
+          {/* Action Buttons */}
+          <div className="d-flex justify-content-end gap-3">
             <button
               type="button"
-              className="btn btn-outline-secondary me-2"
+              className="btn btn-outline-secondary px-4 py-2"
               onClick={handleReset}
               disabled={isLoading}
             >
-              <i className="fas fa-undo me-1"></i> Reset
+              Reset Form
             </button>
             <button
               type="submit"
-              className="btn btn-primary px-4"
+              className="btn btn-primary px-5 py-2 shadow-sm"
               disabled={isLoading}
             >
               {isLoading ? (
@@ -221,11 +330,11 @@ const ProgressionForm = ({ onSubmit, isLoading, onReset }) => {
                     role="status"
                     aria-hidden="true"
                   ></span>
-                  Processing...
+                  Analyzing...
                 </>
               ) : (
                 <>
-                  <i className="fas fa-chart-line me-1"></i> Predict
+                  Predict
                 </>
               )}
             </button>
