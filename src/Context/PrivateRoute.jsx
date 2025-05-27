@@ -6,7 +6,7 @@ export function PrivateRoute({ roles }) {
   const { isAuthenticated, hasRole, user } = useAuth(); // Destructure user from useAuth
 
   if (!isAuthenticated()) {
-    return <Navigate to="/auth/signIn" />;
+    return <Navigate to="/signIn" />;
   }
 
   if (roles && !roles.some(role => hasRole(role))) {

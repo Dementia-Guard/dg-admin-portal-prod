@@ -12,7 +12,7 @@ export default function AppStack() {
 
     // If the user is unauthenticated, redirect them to the signIn
     if (!isAuthenticated()) {
-        return <Navigate to="/auth/signIn" />;
+        return <Navigate to="/signIn" />;
     }
     return (
         <>
