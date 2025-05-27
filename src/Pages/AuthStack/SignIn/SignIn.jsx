@@ -19,8 +19,8 @@ export default function SignIn() {
                 access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI2NzEyZjM4NjhhMDA1YTM3NzkyNjhmMzAiLCJlbWFpbCI6InNoYWJlZXJAZXhhbXBsZS5jb20iLCJyb2xlIjoiQURNSU4iLCJuYmYiOjE3MjkzMjk2NjcsImV4cCI6MTcyOTM0MDQ2NywiaWF0IjoxNzI5MzI5NjY3fQ.8o12QJU6BhucSXy_stuus7wFY7hv03rbNeQ8cB44DDU",
                 user: {
                     Id: "6712f3868a005a3779268f30",
-                    FirstName: "Anura",
-                    LastName: "bro",
+                    FirstName: "Guest",
+                    LastName: "User",
                     Email: "shabeer@example.com",
                     Role: "ADMIN",
                     Telephone: "712345678",
